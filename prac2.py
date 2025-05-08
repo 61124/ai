@@ -31,23 +31,21 @@ def get_successors(board):
     return successors
 
 def solve_n_queens(n=8):
-    initial_board = [0] * n  # Initial board with all queens in column 0
-
-    open_list = []
-    heapq.heappush(open_list, Node(initial_board, 0, heuristic(initial_board)))
-
+    if n==3 or n==2:
+        return None
+    open_list=[]
+    initial_board=[0]*n
+    heapq.heappush(open_list,Node(initial_board,0,heauristic(initial_board)))
     while open_list:
-        current_node = heapq.heappop(open_list)
-        board = current_node.board
-
-        if current_node.h == 0:  # Solution found
+        node = heapq.heappop(open_list)
+        board = node.board
+        if node.h == 0:
             return board
-
+            # print_board(board)
         for successor in get_successors(board):
-            h = heuristic(successor)
-            heapq.heappush(open_list, Node(successor, current_node.g + 1, h))
-
-    return None  # No solution found
+            h=heauristic(successor)
+            heapq.heappush(open_list,Node(successor,node.g+1,h))
+    return None
 
 def print_board(board):
     if board:
